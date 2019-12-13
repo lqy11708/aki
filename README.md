@@ -18,6 +18,7 @@ We need to balance data to avoid naive prediction.
 
 2.	Build Model 
 （a）Model A (baseline model): 
+
 Find the most popular books that account for 50% of interactions in the training data(totalRead/2). Return ‘1’ whenever such a book is seen at test time, ‘0’ otherwise.
 If the book is in the popular book list, predict 1.
 Otherwise, predict 0.
@@ -28,11 +29,10 @@ As a result, threshold of 1.6 is the best on validation data. That is to take ab
 The accuracy is increased to 0.6519
 
  
-
-
 The problem of the model is that it doesn’t relate the user with the book. But in fact, the book and the user must have some interaction. So, we go further to use Jaccard Similarity, which computes the interactions of users and books. 
 
 (b) Model B (Jaccard Similarity):
+
 Given a pair (u, b) in the validation set, consider all training items b 0 that user u has read. For each, compute the Jaccard similarity between b and b 0 , i.e., users (in the training set) who have read b and users who have read b 0 . Predict as ‘read’ if the maximum of these Jaccard similarities exceeds a threshold.
 
 picked a book that is read, the max Jaccard is 0.026. I used this as one reference to set the benchmark of Jaccard.
@@ -40,6 +40,7 @@ Loop a threshold from 0.001~0.03, and find when the threshold is 0.011, the accu
 
 
 (c) Model C (Regression Model):
+
 My best prediction accuracy on the validation data is 69.9% and 70% on test using Logistic Regression. I tried 7 features and finally picked 2: mean Jaccard similarity of books and read proportion—one measures the similarity of the users and the other measures the popularity of the book.  
 The other 5 features I’ve also tried but don’t work better are: 
 Maximum Jaccard similarity of books 
@@ -53,12 +54,19 @@ When training the regression model, I also tried put higher weights to labels th
 Task2: Rating prediction
 
 I used the average rating +bias model: α + βuser + βitem to predict the rating of a book.
+
 My rating prediction is top25% among 423 people in Kaggle.
 
 First to initialize α, βuser and βitem, then, using the iteration convergence to calculate the bias terms for each user and each book until the MSE changes little. 
+
 When fixing the lambda=1, I iterated 20 times until MSE began increasing a little. After that, I looped lambda from 1 to 7 to find the one that could minimize MSE on validation data. 
+
 Finally, I chose lambda=3, the α and bias terms after 2nd iteration minimized the MSE.
+
 So, I applied the α + βuser + βitem on the test data and predict the rating. 
+
 One thing that I tried to improve is to pick different lambda when calculating βuser and βitem.
+
 But it seems too heavy for my computer to run the for loop. 
+
 Further improvement can be done with latent model.
