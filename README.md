@@ -1,5 +1,6 @@
-Read prediction
-Task: Predict given a (user,book) pair from ‘pairs Read.txt’ whether the user would read the book (0 or 1).
+Task1: Rating predictionRead prediction
+
+Predict given a (user,book) pair from ‘pairs Read.txt’ whether the user would read the book (0 or 1).
 Conclusion: My best prediction accuracy on the validation data is 69.9% and 70% on test using Logistic Regression.
 2 features: mean Jaccard similarity of books and read proportion—one measures the similarity of the users and the other measures the popularity of the book. 
 My reading prediction is top35% among 847 people in Kaggle.
