@@ -1,3 +1,5 @@
+dataset can be found in Homework3.pdf
+
 Task1: Rating predictionRead prediction
 
 Predict given a (user,book) pair from ‘pairs Read.txt’ whether the user would read the book (0 or 1).
